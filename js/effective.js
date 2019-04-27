@@ -1,3 +1,8 @@
+/**
+ *
+ * Copyright (c) 2019 suchu <https://githuboy.online>
+ * Released under MIT License
+ */
 (function(window){
   var ig = function(){
       //完成数量
@@ -111,6 +116,7 @@
               for (var i = 0; this.MAX_CANVAS > i; ++i) {
                   imgDataList.push(context.createImageData(width, height));
               }
+              //从谷歌js中逆向过来的
               for (var w = 0; w < width; ++w)
                   for (var h = 0; h < height; ++h)
                       for (var l = 0; 2 > l; ++l) {
@@ -142,6 +148,7 @@
                               ig.removeSelf(tempCanvas);
                               thiz.count++;
                               counter++;
+                              //这里链式执行，谷歌的实现基于setTimeout的时间差.
                               if (thiz.count === ig.MAX_CANVAS) {
                                   ig.compeleteCount ++;
                                   if(ig.compeleteCount === ig.elements.length){
@@ -161,7 +168,7 @@
                   }(tempCanvas), 0);
               }
           });
-      }
+      };
       //运行
       this.run=function(){
           if(this.inversion){
@@ -176,8 +183,5 @@
           }
       };
   };
-
-
-
     window.ig= new ig();
 })(window);
