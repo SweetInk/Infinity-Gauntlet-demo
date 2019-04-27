@@ -2,14 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Avengers: end game </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0" />
+    <title>Avengers: Avengers: Endgame </title>
     <script type="text/javascript" src="http://html2canvas.hertzen.com/dist/html2canvas.js"></script>
     <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="js/jquery.animate-colors.js"></script>
+    <script src="./js/effective.js"></script>
     <style>
         .g {
             position: relative;
         }
-
+        img{
+            width: 480;
+        }
         .wrapper {
             /*border: 1px solid deepskyblue;*/
             /*position: absolute;*/
@@ -17,16 +22,16 @@
         }
 
         .title {
-            color: green;
+            /*color: green;*/
         }
 
         .content {
-            color: black;
+            /*color: black;*/
         }
 
         .footer {
             font-weight: bold;
-            color: darkslategray;
+            /*color: darkslategray;*/
             font-size: 24px;
         }
 
@@ -49,7 +54,7 @@
             Man）是由美国漫威电影工作室出品的一部科幻冒险电影，改编自同名系列漫画，由乔恩·费儒执导，小罗伯特·唐尼及格温妮斯·帕特洛、杰夫·布里吉斯等主演。该作也是“漫威电影宇宙”系列的首部电影。该片于2008年5月2日在美国上映。影片讲述了托尼·史塔克在遇难后改进了盔甲的功能，化身“钢铁侠”，以一个义务警察的身份保护了这个世界和平的故事。
             >>>
         </div>
-        <p class="footer"><i>Avengers: end game</i></p>
+        <p class="footer"><i>Avengers: Avengers: Endgame</i></p>
     </div>
 </div>
 <div class="g">
@@ -61,7 +66,7 @@
             Man）是由美国漫威电影工作室出品的一部科幻冒险电影，改编自同名系列漫画，由乔恩·费儒执导，小罗伯特·唐尼及格温妮斯·帕特洛、杰夫·布里吉斯等主演。该作也是“漫威电影宇宙”系列的首部电影。该片于2008年5月2日在美国上映。影片讲述了托尼·史塔克在遇难后改进了盔甲的功能，化身“钢铁侠”，以一个义务警察的身份保护了这个世界和平的故事。
             >>>
         </div>
-        <p class="footer">Avengers: end game</p>
+        <p class="footer">Avengers: Avengers: Endgame</p>
     </div>
 </div>
 <div class="g">
@@ -73,7 +78,7 @@
             Man）是由美国漫威电影工作室出品的一部科幻冒险电影，改编自同名系列漫画，由乔恩·费儒执导，小罗伯特·唐尼及格温妮斯·帕特洛、杰夫·布里吉斯等主演。该作也是“漫威电影宇宙”系列的首部电影。该片于2008年5月2日在美国上映。影片讲述了托尼·史塔克在遇难后改进了盔甲的功能，化身“钢铁侠”，以一个义务警察的身份保护了这个世界和平的故事。
             >>>
         </div>
-        <p class="footer">Avengers: end game</p>
+        <p class="footer">Avengers: Avengers: Endgame</p>
     </div>
 </div>
 <div class="g">
@@ -85,146 +90,27 @@
             Man）是由美国漫威电影工作室出品的一部科幻冒险电影，改编自同名系列漫画，由乔恩·费儒执导，小罗伯特·唐尼及格温妮斯·帕特洛、杰夫·布里吉斯等主演。该作也是“漫威电影宇宙”系列的首部电影。该片于2008年5月2日在美国上映。影片讲述了托尼·史塔克在遇难后改进了盔甲的功能，化身“钢铁侠”，以一个义务警察的身份保护了这个世界和平的故事。
             >>>
         </div>
-        <p class="footer">Avengers: end game</p>
+        <p class="footer">Avengers: Avengers: Endgame</p>
     </div>
 </div>
 
 <div id="result">
 </div>
 <script>
-    //动画过渡时间
-  const DEFAULT_DURATION = 1.5;
-  //最大堆叠canvas数量
-  const MAX_CANVAS = 32;
-  //移除自身
-  removeSelf = function (ele) {
-    return ele && ele.parentNode ? ele.parentNode.removeChild(ele) : null;
-  };
-  //插入元素
-  insertBefore = function (target, src) {
-    src.parentNode && src.parentNode.insertBefore(target, src);
-  };
-  //设置元素样式
-  setElementStyle = function (target, attr, value) {
-    $(target).css(attr, value);
-  };
-  //是否反转
-  var inversion = false;
-  //湮灭!
-  annihilate = function (self, ele) {
-    var thiz = self;
-    html2canvas(ele, {
-      allowTaint: false,
-      useCORS: false
-    }).then(eleCanvas => {
-
-      var context = eleCanvas.getContext('2d');
-      var width = eleCanvas.width;
-      var height = eleCanvas.height;
-      try {
-        var originImageData = context.getImageData(0, 0, width, height);
-      } catch (e) {
-        return;
-      }
-      //设置目标元素过渡动画
-      setElementStyle(ele, 'transition', 'opacity ' + DEFAULT_DURATION + 's ease');
-      setElementStyle(ele, 'opacity', 0);
-      setTimeout(function () {
-        setElementStyle(ele, 'visibility', 'hidden');
-      }, 1E3 * DEFAULT_DURATION);
-      setElementStyle(eleCanvas, 'position', 'absolute');
-      setElementStyle(eleCanvas, 'pointerEvents', 'none');
-      var h = 0;
-      var k = 0;
-      var marginLeft = -50 + (0 > h ? h : 0) + (0 > k ? k : 0);
-      marginLeft = 0;
-      //设置画布样式 &&
-      setElementStyle(eleCanvas, 'margin-left', marginLeft + 'px');
-      setElementStyle(eleCanvas, 'transition', 'transform ' + DEFAULT_DURATION + 's ease-out, opacity ' + DEFAULT_DURATION + 's ease-out');
-      var imgDataList = [];
-      for (var i = 0; MAX_CANVAS > i; ++i) {
-        imgDataList.push(context.createImageData(width, height));
-      }
-      for (var w = 0; w < width; ++w)
-        for (var h = 0; h < height; ++h)
-          for (var l = 0; 2 > l; ++l) {
-            for (var rndIndex = Math.floor(32 * (Math.random() + 2 * w / width) / 3),
-                   n = 4 * (h * width + w),
-                   pixelColorIndex = 0
-              ; 4 > pixelColorIndex;
-                 ++pixelColorIndex) {
-              imgDataList[ rndIndex ].data[ n + pixelColorIndex ] = originImageData.data[ n + pixelColorIndex ];
-
-            }
-          }
-      var counter= 0;
-      //new line
-      for (var imgIndex = 0; MAX_CANVAS > imgIndex;
-           ++imgIndex) {
-        var tempCanvas = eleCanvas.cloneNode(true);
-        tempCanvas.getContext('2d').putImageData(imgDataList[ imgIndex ], 0, 0);
-        $(tempCanvas).css('transitionDelay', 1.35 * imgIndex / 32 + 's');
-
-        insertBefore(tempCanvas, ele);
-        setTimeout(function (tempCanvas) {
-          return function () {
-            var r = 2 * Math.PI * (Math.random() - .5);
-            $(tempCanvas).css('transform', 'rotate(' + 15 * (Math.random() - .5) + 'deg) translate(' + 60 * Math.cos(r) + 'px, ' + 30 * Math.sin(r) + 'px)\n                  rotate(' + 15 * (Math.random() - .5) + 'deg)');
-            $(tempCanvas).css('opacity', 0);
-            setTimeout(function () {
-              removeSelf(tempCanvas);
-              counter++;
-              if(counter===MAX_CANVAS){
-                console.log("over__");
-                if(thiz.next !=null){
-                    thiz.next.func();
-                }
-              }
-
-            }, 1E3 * (1.5 + 1 + Math.random()));
-          };
-        }(tempCanvas), 0);
-      }
-    });
-  };
-
-  $('#snap').click(function () {
-    var e = [];
-
-    if (inversion) {
-      $('.wrapper').css('visibility', 'visible');
-      $('.wrapper').css('opacity', '1');
-      inversion = !inversion;
-      return;
-    }
-    inversion = !inversion;
-    //head pointer
-    var head = null;
-    //tail pointer
-    var tail = null;
-    $('.wrapper').each(function (index, item) {
-      if(index%2==0){
-        var node = {
-          ele:item,
-          index:index,
-          func:function(){
-            annihilate(this,this.ele)
-          },
-          next:null,
-        };
-        if(head ==null){
-          head = node;
-          tail = head;
-        }else{
-          tail.next = node;
-          tail = node;
+    window.ig.config({
+        animOver:function () {
+            console.log("hhhhaa ");
         }
-      }
-
+    });
+    $('#snap').click(function () {
+      $('.wrapper').each(function (index, item) {
+          if(index%2 ==0)
+          window.ig.elements.push(item);
+        });
+      window.ig.run();
     });
 
-    head.func();
-  });
+
 </script>
 </body>
 </html>
