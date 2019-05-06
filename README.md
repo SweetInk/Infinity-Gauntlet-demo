@@ -3,7 +3,7 @@
 
 [Google 搜索thanos 效果](https://www.google.com/search?ei=3ffDXMG3L6qxmAX3urjIDg&amp;q=thanos&amp;oq=thano)
 
-[demo 效果](https://githuboy.online/Infinity-Gauntlet-demo/index.html)
+[demo 效果](https://githuboy.online/others/demo/Infinity-Gauntlet-demo/index.html)
 
 # 使用库
 [Jquery](http://jquery.com/)
