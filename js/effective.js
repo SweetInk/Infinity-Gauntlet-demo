@@ -64,11 +64,15 @@
           index: index,
           func: function () {
             var thiz = this;
-            $('html, body').animate({
-              scrollTop: $(this.ele).offset().top
-            }, 1000, 'linear', function () {
-              parentContext.annihilate(parentContext, thiz, thiz.ele);
-            });
+            var offset= $(this.ele).offset().top;
+            window.scrollTo({top:offset,
+              behavior: "smooth" });
+            parentContext.annihilate(parentContext, thiz, thiz.ele);
+           /* $('html, body').animate({
+              scrollTop: offset
+            }, 200, 'linear', function () {
+
+            });*/
           },
           next: null,
         };
@@ -158,7 +162,6 @@
           tempCanvas.getContext('2d').putImageData(imgDataList[ imgIndex ], 0, 0);
           $(tempCanvas).css('transitionDelay', 1.35 * imgIndex / 32 + 's');
           insertBefore(tempCanvas, ele);
-          ig.removeSelf(tempCanvas);
           setTimeout(function (tempCanvas) {
             return function () {
               var r = 2 * Math.PI * (Math.random() - .5);
