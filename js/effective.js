@@ -82,7 +82,7 @@
       var div = document.createElement('div');
       div.style = 'position:absolute;cursor:pointer;width:80;height:80';
       var id = '#' + new Date().getTime();
-      var imgIdle = this.loadImage('./thanos_idle.png');
+      var imgIdle = this.loadImage('./images/thanos_idle.png');
       imgIdle.style = 'position:absolute;';
       var canvas = document.createElement('canvas');
       canvas.width = 80;
@@ -98,12 +98,12 @@
       ele.append(div);
       this.placeholderImg = imgIdle;
       this.ctx = canvas.getContext('2d');
-      this.imgA = this.loadImage('./thanos_snap.png', function (img) {
+      this.imgA = this.loadImage('./images/thanos_snap.png', function (img) {
         self.playAnimation(self.ctx, img, 0, 1, function () {
           self.placeholderImg.style = 'display:none';
         });
       });
-      this.imgB = this.loadImage('./thanos_time.png');
+      this.imgB = this.loadImage('./images/thanos_time.png');
     };
     //播放动画
     this.playAnimation = function (ctx, img, startFrame, endFrame, callback) {
