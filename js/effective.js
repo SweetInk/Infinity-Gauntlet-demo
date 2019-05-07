@@ -42,21 +42,21 @@
       var self = this;
       var counter = 0;
       var allEleCount = this.elements.length;
-      while (this.elements.length > 0) {
-        var ele = this.elements.shift();
+      for (var i = 0; i < this.elements.length; i++) {
+        var ele = this.elements[ i ];
         $(ele).css('visibility', 'visible');
         $(ele).css('opacity', '1');
         $(ele).animate({ 'opacity': 1 }, 1000, 'linear', function () {
-          //console.log(this);
         });
         $(ele).animate({ 'color': '#008000' }, 3000, 'linear', function () {
           $(this).animate({ 'color': '#000' }, 1500, 'linear', function () {
+            counter++;
             if (counter === allEleCount) {
               self.processing = false;
               self.inversion = !self.inversion;
               self.updateCursor();
             }
-            counter++;
+
           });
         });
       }
