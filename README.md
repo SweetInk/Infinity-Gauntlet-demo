@@ -1,9 +1,14 @@
 # Infinity-Gauntlet-demo
+
 "仿"Google 灭霸无限手套效果 demo 
 
-[Google 搜索thanos 效果](https://www.google.com/search?ei=3ffDXMG3L6qxmAX3urjIDg&amp;q=thanos&amp;oq=thano)
+* 手套图片资源来自Google(logo中心?)
 
-[demo 效果](https://githuboy.online/others/demo/Infinity-Gauntlet-demo/index.html)
+* 钢铁侠图片来自互联网(视觉中国别找我啊)
+
+* [Google 搜索thanos 效果](https://www.google.com/search?ei=3ffDXMG3L6qxmAX3urjIDg&amp;q=thanos&amp;oq=thano)
+
+* [demo 效果](https://githuboy.online/others/demo/Infinity-Gauntlet-demo/index.html)
 
 # 使用库
 [Jquery](http://jquery.com/)
