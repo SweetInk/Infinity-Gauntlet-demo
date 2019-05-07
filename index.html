@@ -9,13 +9,22 @@
     <script src="js/jquery.animate-colors.js"></script>
     <script src="./js/effective.js"></script>
     <link href="./css/style.css" rel="stylesheet" type="text/css">
-
+    <style>
+        #cvs {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
+<div id="cvsContainer">
+    <canvas id="cvs" width="80" height="81" style="width: 80px; height: 81px;cursor: pointer">
+        your browser not support canvas
+    </canvas>
+</div>
 <div class="console"></div>
-<button id="snap">Snap</button>
 <button id="cls_console">clear console</button>
-<div style="margin: 0 auto">
+<div style="margin: 0 auto;display: block">
     <div class="g">
     <div class="wrapper">
         <p class="title">Tony Stark</p>
@@ -66,33 +75,37 @@
     </div>
 </div>
 <script>
-    window.console_ = window.console;
-    window.console.log = function () {
-        var arg = arguments;
-        var str = "";
-        for (var i = 0; i < arguments.length; i++) {
-            str += arguments[i] + " ";
-        }
-        $("div.console").append('<span class="line">&gt;&nbsp;' + str + '</span><br>')
-    };
-    $("div.console").append('<span class="line">> Console</span><br>')
-    window.ig.config({
-        animOver:function () {
-            console.log("hhhhaa ");
-        }
-    });
-    $('#snap').click(function () {
-      $('.wrapper').each(function (index, item) {
-          if(index%2 ==0)
-          window.ig.elements.push(item);
-        });
-      window.ig.run();
-    });
-    $("#cls_console").click(function () {
-        $("div.console").html('<span class="line">> Console</span><br>');
-    });
+  var ax = window.AudioContext ? new window.AudioContext : window.webkitAudioContext ? new window.webkitAudioContext : null;
+</script>
 
+<script>
+  window.console_ = window.console;
+  window.console.log = function () {
+    var arg = arguments;
+    var str = "";
+    for (var i = 0; i < arguments.length; i++) {
+      str += arguments[i] + " ";
+    }
+    $("div.console").append('<span class="line">&gt;&nbsp;' + str + '</span><br>')
+  };
+  $('div.console').append('<span class="line">> Console</span><br>');
 
+  var elements = [];
+  $('.wrapper').each(function (index, item) {
+    if (index % 2 === 0)
+      elements.push(item);
+  });
+  window.ig.config({
+    animOver:function () {
+      console.log("hhhhaa ");
+    },
+    ele: document.getElementById('cvsContainer'),
+    elements: elements
+  });
+
+  $("#cls_console").click(function () {
+    $("div.console").html('<span class="line">> Console</span><br>');
+  });
 </script>
 </body>
 </html>

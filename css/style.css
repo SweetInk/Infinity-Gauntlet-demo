@@ -1,3 +1,8 @@
+#cvsContainer {
+    position: fixed;
+    right: 58%;
+    z-index: 1000;
+}
 .console {
     padding: 2px 4px;
     position: fixed;

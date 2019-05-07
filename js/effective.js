@@ -7,6 +7,7 @@
   var ig = function () {
     //完成数量
     this.compeleteCount = 0;
+    this.processing = false;
     //元素列表
     this.elements = [];
     //动画图层数量
@@ -28,12 +29,19 @@
       $(target).css(attr, value);
     };
 
-    this.config = function (props) {
+    this.config = function (props = {}) {
       this.animOver = props.animOver || $.noop();
+      this.canvasContainer = props.ele;
+      this.elements = props.elements;
+      if (null == this.canvasContainer) return;
+      this.configCanvas(this.canvasContainer);
     };
 
     //反转
     this.reverse = function () {
+      var self = this;
+      var counter = 0;
+      var allEleCount = this.elements.length;
       while (this.elements.length > 0) {
         var ele = this.elements.shift();
         $(ele).css('visibility', 'visible');
@@ -43,10 +51,73 @@
         });
         $(ele).animate({ 'color': '#008000' }, 3000, 'linear', function () {
           $(this).animate({ 'color': '#000' }, 1500, 'linear', function () {
+            if (counter === allEleCount) {
+              self.processing = false;
+              self.inversion = !self.inversion;
+              self.updateCursor();
+            }
+            counter++;
           });
         });
       }
-      this.inversion = !this.inversion;
+    };
+    this.loadImage = function (imgUrl, callback) {
+      var img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.src = imgUrl;
+      img.onload = function () {
+        callback && callback(img);
+        console.log('Image: ' + imgUrl + ' load success');
+      };
+      return img;
+    };
+    this.handleClick = function () {
+      this.run();
+    };
+    //配置"手套"画布
+    this.configCanvas = function (ele) {
+      var self = this;
+      $(ele).html('');
+      //create div;
+      var div = document.createElement('div');
+      div.style = 'position:absolute;cursor:pointer;width:80;height:80';
+      var id = '#' + new Date().getTime();
+      var imgIdle = this.loadImage('./thanos_idle.png');
+      imgIdle.style = 'position:absolute;';
+      var canvas = document.createElement('canvas');
+      canvas.width = 80;
+      canvas.height = 81;
+      canvas.style = 'box-shadow:1px 1px 1px 1px #d80c00;border-radius: 50%;';
+      canvas.id = id;
+      this.canvas = canvas;
+      var handleClick = this.handleClick.bind(this);
+      this.canvas.addEventListener('click', handleClick, false);
+      this.div = div;
+      div.append(imgIdle);
+      div.append(canvas);
+      ele.append(div);
+      this.placeholderImg = imgIdle;
+      this.ctx = canvas.getContext('2d');
+      this.imgA = this.loadImage('./thanos_snap.png', function (img) {
+        self.playAnimation(self.ctx, img, 0, 1, function () {
+          self.placeholderImg.style = 'display:none';
+        });
+      });
+      this.imgB = this.loadImage('./thanos_time.png');
+    };
+    //播放动画
+    this.playAnimation = function (ctx, img, startFrame, endFrame, callback) {
+      var self = this;
+      if (startFrame >= endFrame) {
+        callback && callback.call(this);
+        return;
+      }
+      ctx.clearRect(0, 0, 80, 80);
+      ctx.drawImage(img, startFrame * 80, 0, 80, 80, 0, 0, 80, 80);
+      startFrame++;
+      setTimeout(function () {
+        self.playAnimation(ctx, img, startFrame, endFrame, callback);
+      }, 60);
     };
     //构建元素动画链表
     this.buildLinkList = function () {
@@ -64,15 +135,17 @@
           index: index,
           func: function () {
             var thiz = this;
-            var offset= $(this.ele).offset().top;
-            window.scrollTo({top:offset,
-              behavior: "smooth" });
+            var offset = $(this.ele).offset().top;
+            window.scrollTo({
+              top: offset,
+              behavior: 'smooth'
+            });
             parentContext.annihilate(parentContext, thiz, thiz.ele);
-           /* $('html, body').animate({
-              scrollTop: offset
-            }, 200, 'linear', function () {
+            /* $('html, body').animate({
+             scrollTop: offset
+             }, 200, 'linear', function () {
 
-            });*/
+             });*/
           },
           next: null,
         };
@@ -85,6 +158,14 @@
         }
       });
       return head;
+    };
+
+    this.updateCursor = function () {
+      if (this.processing) {
+        this.div.style.cursor = 'not-allowed';
+      } else {
+        this.div.style.cursor = 'pointer';
+      }
     };
     //湮灭
     this.annihilate = function (ig, self, ele) {
@@ -179,7 +260,9 @@
                     setTimeout(function () {
                       console.log('all task finished');
                       ig.animOver && ig.animOver();
+                      ig.processing = false;
                       ig.compeleteCount = 0;
+                      ig.updateCursor();
                     }, 0);
                   }
                   if (thiz.next != null) {
@@ -194,16 +277,31 @@
       });
     };
     //运行
-    this.run = function () {
+    this.run = function (a, b) {
+      if (this.processing) {
+        console.log('current processing,not allowed');
+        return;
+      }
+
+      this.processing = true;
+      this.updateCursor();
       if (this.inversion) {
-        this.reverse();
-        return 0;
+        this.playAnimation(this.ctx, this.imgB, 0, 48, function () {
+          this.reverse();
+          return 0;
+        });
+        //b && b();
+
       } else {
-        this.inversion = !this.inversion;
-        //head pointer
-        var head = this.buildLinkList();
-        //run
-        head.func();
+        this.playAnimation(this.ctx, this.imgA, 0, 48, function () {
+          this.inversion = !this.inversion;
+          //head pointer
+          var head = this.buildLinkList();
+          //run
+          head.func();
+        });
+        //a && a();
+
       }
     };
   };
